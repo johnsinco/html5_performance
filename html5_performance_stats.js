@@ -4,10 +4,10 @@
 // author: John Stewart @john_s_in_co
 
 var s;
-var BrowserEvents = {
+var PerformanceStats = {
 
   settings: {
-    dataSendUrl:  "/browser_events"
+    dataSendUrl:  "/performance_log"
   },
 
   init: function() {
@@ -28,15 +28,15 @@ var BrowserEvents = {
   logTiming: function() {
     // get the browser performance data and save to local storage
     try {
-      if(BrowserEvents.supports_performance_stats() && BrowserEvents.supports_html5_storage()) {
-        stats = BrowserEvents.getPerfStats();
+      if(PerformanceStats.supports_performance_stats() && PerformanceStats.supports_html5_storage()) {
+        stats = PerformanceStats.getPerfStats();
         data = localStorage['perfTiming'] || "[]";
         data = JSON.parse(data);
         data.push(stats);
         localStorage['perfTiming'] = JSON.stringify(data);
         // if the data count > 10, send to the server
         if(data.length > 10) {
-          BrowserEvents.sendToServer();
+          PerformanceStats.sendToServer();
         }
       }
     } catch(e) {
@@ -46,7 +46,7 @@ var BrowserEvents = {
 
   // log an error to local storage
   logError: function(error) {
-    if(BrowserEvents.supports_html5_storage()) {
+    if(PerformanceStats.supports_html5_storage()) {
       errors = localStorage['errors'] || "[]";
       errors = JSON.parse(errors);
       errors.push(error);
