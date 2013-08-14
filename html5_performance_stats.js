@@ -82,10 +82,6 @@ var PerformanceStats = {
     }
   },
 
-  ajaxSend: function() {
-
-  },
-
   getPerfStats: function() {
     if(PerformanceStats.supports_performance_stats()) {
       var timing = window.performance.timing;
@@ -136,6 +132,24 @@ var PerformanceStats = {
   }
 
 };
+
+ // send all local event data to the server
+var sendToServer: function(data) {
+    console.log("sending performance stats to host");
+    try {
+      var req = PerformanceStats.getAjax();
+      statString = data;
+      if(req != null && statString != null) {
+        req.open('POST', s['dataSendUrl'], true);
+        req.setRequestHeader("Content-type","application/json");
+        req.send(statString);
+        localStorage.removeItem('perfTiming');
+      }
+    } catch(e) {
+      console.log(e);
+      return false;
+    }
+  }; 
 
 window.onload = function(){
   PerformanceStats.init();
