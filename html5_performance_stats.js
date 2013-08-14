@@ -138,7 +138,7 @@ var sendToServer = function(data) {
     console.log("sending performance stats to host");
     try {
       var req = PerformanceStats.getAjax();
-      statString = data;
+      statString = JSON.stringify(data);
       if(req != null && statString != null) {
         req.open('POST', s['dataSendUrl'], true);
         req.setRequestHeader("Content-type","application/json");
