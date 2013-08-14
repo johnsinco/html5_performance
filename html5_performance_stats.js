@@ -8,6 +8,7 @@ var PerformanceStats = {
 
   settings: {
     dataSendUrl:  "/performance_log"
+    transmitStats: PerformanceStats.sendToServer();
   },
 
   init: function() {
