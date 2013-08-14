@@ -59,7 +59,7 @@ var PerformanceStats = {
   sendToServer: function() {
     console.log("sending performance stats to host");
     try {
-      var req = BrowserEvents.getAjax();
+      var req = PerformanceStats.getAjax();
       statString = localStorage['perfTiming'];
       if(req != null && statString != null) {
         req.open('POST', s['dataSendUrl'], true);
@@ -74,7 +74,7 @@ var PerformanceStats = {
   },
 
   getPerfStats: function() {
-    if(BrowserEvents.supports_performance_stats()) {
+    if(PerformanceStats.supports_performance_stats()) {
       var timing = window.performance.timing;
       var nav = window.performance.navigation;
       return {
@@ -125,8 +125,8 @@ var PerformanceStats = {
 };
 
 window.onload = function(){
-  BrowserEvents.init();
+  PerformanceStats.init();
   setTimeout(function(){
-    BrowserEvents.logTiming();
+    PerformanceStats.logTiming();
   }, 2000);
 };
