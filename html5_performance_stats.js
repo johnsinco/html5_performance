@@ -134,7 +134,7 @@ var PerformanceStats = {
 };
 
  // send all local event data to the server
-var sendToServer: function(data) {
+var sendToServer = function(data) {
     console.log("sending performance stats to host");
     try {
       var req = PerformanceStats.getAjax();
