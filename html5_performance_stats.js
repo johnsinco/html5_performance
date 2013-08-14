@@ -7,8 +7,8 @@ var s;
 var PerformanceStats = {
 
   settings: {
-    dataSendUrl:  "/performance_log"
-    transmitStats: PerformanceStats.sendToServer();
+    dataSendUrl:  "/performance_log",
+    transmitStats: "sendToServer"
   },
 
   init: function() {
@@ -37,7 +37,15 @@ var PerformanceStats = {
         localStorage['perfTiming'] = JSON.stringify(data);
         // if the data count > 10, send to the server
         if(data.length > 10) {
-          PerformanceStats.sendToServer();
+          // PerformanceStats.sendToServer();
+          // http://stackoverflow.com/questions/912596/how-to-turn-a-string-into-a-javascript-function-call
+          var fn = window[s.transmitStats];
+          if(typeof fn === 'function') {
+            // call the defined data-send function and pass it the locally stored hash of events
+              fn(data);
+          } else {
+            console.log("ERROR! unable to call send function "+s.transmitStats);
+          }
         }
       }
     } catch(e) {
@@ -57,11 +65,11 @@ var PerformanceStats = {
   },
 
   // send all local event data to the server
-  sendToServer: function() {
+  sendToServer: function(data) {
     console.log("sending performance stats to host");
     try {
       var req = PerformanceStats.getAjax();
-      statString = localStorage['perfTiming'];
+      statString = data;
       if(req != null && statString != null) {
         req.open('POST', s['dataSendUrl'], true);
         req.setRequestHeader("Content-type","application/json");
@@ -72,6 +80,10 @@ var PerformanceStats = {
       console.log(e);
       return false;
     }
+  },
+
+  ajaxSend: function() {
+
   },
 
   getPerfStats: function() {
