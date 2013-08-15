@@ -9,7 +9,8 @@ var PerformanceStats = {
   settings: {
     dataSendUrl:  "/performance_log",
     transmitStats: "sendToServer",
-    sendInterval: 10
+    sendInterval: 10,
+    recordDelay: 0
   },
 
   init: function() {
@@ -157,5 +158,5 @@ window.onload = function(){
   PerformanceStats.init();
   setTimeout(function(){
     PerformanceStats.logTiming();
-  }, 2000);
+  }, s.recordDelay);
 };
